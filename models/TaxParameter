@@ -1,0 +1,25 @@
+import mongoose from "mongoose";
+
+const TaxParameterSchema = new mongoose.Schema({
+  year: { type: Number, required: true, unique: true },
+  incomeTax: {
+    personalAllowance: { type: Number, required: true },
+    basicRate: { type: Number, required: true },
+    higherRate: { type: Number, required: true },
+    additionalRate: { type: Number, required: true },
+    basicThreshold: { type: Number, required: true },
+    higherThreshold: { type: Number, required: true },
+    taperThreshold: { type: Number, required: true },
+  },
+  nationalInsurance: {
+    primaryThreshold: { type: Number, required: true },
+    upperEarningsLimit: { type: Number, required: true },
+    primaryRate: { type: Number, required: true },
+    upperRate: { type: Number, required: true },
+    selfPrimaryRate: { type: Number, required: true },
+    selfUpperRate: { type: Number, required: true },
+  },
+});
+
+export default mongoose.models.TaxParameter ||
+  mongoose.model("TaxParameter", TaxParameterSchema);

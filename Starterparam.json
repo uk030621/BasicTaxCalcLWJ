@@ -1,0 +1,17 @@
+{
+  "year": 2024,
+  "incomeTax": {
+    "personalAllowance": 12570,
+    "basicRate": 0.2,
+    "higherRate": 0.4,
+    "additionalRate": 0.45,
+    "basicThreshold": 50270,
+    "higherThreshold": 125140
+  },
+  "nationalInsurance": {
+    "primaryThreshold": 12570,
+    "upperEarningsLimit": 50270,
+    "primaryRate": 0.1,
+    "upperRate": 0.02
+  }
+}
