@@ -262,7 +262,7 @@ export default function TaxParameters() {
           <div>
             <label className="block font-bold mb-1 text-sm">Tax Year</label>
             <input
-              className="border p-2 w-full text-sm"
+              className="border p-2 w-full text-base"
               type="number"
               placeholder="Year"
               value={newParam.year}
@@ -282,7 +282,7 @@ export default function TaxParameters() {
                   .replace(/\b\w/g, (char) => char.toUpperCase())}{" "}
               </label>
               <input
-                className={`border p-2 w-full text-sm ${
+                className={`border p-2 w-full text-base ${
                   errors[`incomeTax.${key}`] ? "border-red-500" : ""
                 }`}
                 type="number"
@@ -319,7 +319,7 @@ export default function TaxParameters() {
                   .replace(/\b\w/g, (char) => char.toUpperCase())}{" "}
               </label>
               <input
-                className={`border p-2 w-full text-sm ${
+                className={`border p-2 w-full text-base ${
                   errors[`nationalInsurance.${key}`] ? "border-red-500" : ""
                 }`}
                 type="number"
