@@ -8,6 +8,7 @@ export default function Calculator() {
   const [result, setResult] = useState(null);
   const [availableYears, setAvailableYears] = useState([]);
   const [error, setError] = useState(""); // For validation errors
+  const [isMonthly, setIsMonthly] = useState(false); // Toggle state for Annual/Monthly
 
   // Fetch available years from the backend
   useEffect(() => {
@@ -54,30 +55,15 @@ export default function Calculator() {
     setError(""); // Clear errors
   };
 
+  const formatValue = (value) => {
+    return isMonthly ? (value / 12).toFixed(2) : value.toFixed(2);
+  };
+
   return (
     <div className="pt-4 px-4 min-h-screen bg-black">
       {/* Header */}
       <div className="mb-4">
-        <div className="flex justify-center mt-5">
-          {/*<Link
-            href="/taxparameters"
-            className="mt-3 bg-slate-500 px-4 py-2 text-white rounded-md flex items-center justify-center gap-2 w-fit"
-          >
-             <span className="text-1xl">⬅️ </span>
-            <span className="text-xs">
-              <span className="flex justify-center">Add or Update</span>
-              Tax & NI Parameters
-            </span>
-          </Link>*/}
-        </div>
-
-        {/* This section can be used if you want to expand the capability of this application */}
-        {/*<Link
-          className="mt-2 underline underline-offset-4 flex justify-center"
-          href="/complextaxtabs"
-        >
-          Tabs
-        </Link>*/}
+        <div className="flex justify-center mt-5"></div>
       </div>
 
       {/* Calculator Section */}
@@ -93,7 +79,6 @@ export default function Calculator() {
             href="/taxparameters"
             className="mt-3 bg-slate-500 px-4 py-2 mb-5 text-white rounded-md flex items-center justify-center gap-2 w-fit"
           >
-            {/* <span className="text-1xl">⬅️ </span>*/}
             <span className="text-xs">
               <span className="flex justify-center">Add or Update</span>
               Tax & NI Parameters
@@ -101,7 +86,7 @@ export default function Calculator() {
           </Link>
         </div>
 
-        {/* Year Dropdown */}
+        {/* Year Dropdown and Income Input */}
         <div className="flex flex-wrap gap-2 mb-4">
           <select
             className="flex-1 border p-2 pr-6 rounded-md appearance-none"
@@ -127,88 +112,107 @@ export default function Calculator() {
         {/* Error Message */}
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-        {/* Buttons */}
-        <div className="flex gap-2 mb-4">
-          <button
-            className={`px-4 py-2 rounded-md w-1/2 md:w-auto ${
-              year && income && !isNaN(income)
-                ? "bg-slate-500 text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-            onClick={calculate}
-            disabled={!year || !income || isNaN(income)} // Disable if invalid
-          >
-            Calculate
-          </button>
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-md w-1/2 md:w-auto"
-            onClick={handleRefresh}
-          >
-            Refresh
-          </button>
+        {/* Toggle and Buttons */}
+        <div className="flex items-center gap-4 mb-4">
+          {/*<label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={isMonthly}
+              onChange={() => setIsMonthly(!isMonthly)}
+              className="form-checkbox text-blue-500"
+            />
+            Show Monthly Data
+          </label>*/}
+
+          <div className="flex gap-2">
+            <button
+              className={`px-4 py-2 rounded-md w-full md:w-auto ${
+                year && income && !isNaN(income)
+                  ? "bg-slate-500 text-white"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+              onClick={calculate}
+              disabled={!year || !income || isNaN(income)} // Disable if invalid
+            >
+              Calculate
+            </button>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-md w-full md:w-auto"
+              onClick={handleRefresh}
+            >
+              Refresh
+            </button>
+          </div>
         </div>
+
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={isMonthly}
+            onChange={() => setIsMonthly(!isMonthly)}
+            className="form-checkbox text-blue-500"
+          />
+          Display Monthly
+        </label>
 
         {/* Results Section */}
         {result && (
           <div className="grid gap-4 mt-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {/* Net Income Box */}
+            <div className="bg-white p-4 border border-gray-300 rounded-lg shadow">
+              <p className="font-bold text-slate-700">
+                Net Income per {isMonthly ? "month" : "year"}
+              </p>
+              <p>
+                Employed: £
+                {formatValue(
+                  result.income - result.incomeTax - result.nationalInsurance
+                )}
+              </p>
+              <p>
+                Self-Employed: £
+                {formatValue(
+                  result.income - result.incomeTax - result.senationalInsurance
+                )}
+              </p>
+              <p>Pensioner: £{formatValue(result.income - result.incomeTax)}</p>
+            </div>
+
             {/* Tax Box */}
             <div className="bg-white p-4 border border-gray-300 rounded-lg shadow">
-              <p className="font-bold text-slate-700">Annual Income Tax</p>
-              <p>@ 20% = £{result.tax20.toFixed(2)}</p>
-              <p>@ 40% = £{result.tax40.toFixed(2)}</p>
-              <p>@ 45% = £{result.tax45.toFixed(2)}</p>
-              <p className="mt-1">Total = £{result.incomeTax.toFixed(2)}</p>
+              <p className="font-bold text-slate-700">
+                {isMonthly ? "Monthly" : "Annual"} Income Tax
+              </p>
+              <p>@ 20% = £{formatValue(result.tax20)}</p>
+              <p>@ 40% = £{formatValue(result.tax40)}</p>
+              <p>@ 45% = £{formatValue(result.tax45)}</p>
+              <p className="mt-1">Total = £{formatValue(result.incomeTax)}</p>
             </div>
 
             {/* National Insurance Box */}
             <div className="bg-white p-4 border border-gray-300 rounded-lg shadow">
               <p className="font-bold text-slate-700">
-                Annual National Insurance
+                {isMonthly ? "Monthly" : "Annual"} National Insurance
               </p>
-              <p>Employed: £{result.nationalInsurance.toFixed(2)}</p>
-              <p>Self Employed: £{result.senationalInsurance.toFixed(2)}</p>
+              <p>Employed: £{formatValue(result.nationalInsurance)}</p>
+              <p>Self Employed: £{formatValue(result.senationalInsurance)}</p>
               <p>Pensioner: £0</p>
             </div>
 
             {/* Deductions Box */}
             <div className="bg-white p-4 border border-gray-300 rounded-lg shadow">
-              <p className="font-bold text-slate-700">Annual Deductions</p>
+              <p className="font-bold text-slate-700">
+                {isMonthly ? "Monthly" : "Annual"} Deductions
+              </p>
               <p>
                 Employed: £
-                {(result.incomeTax + result.nationalInsurance).toFixed(2)}
+                {formatValue(result.incomeTax + result.nationalInsurance)}
               </p>
               <p>
                 Self-Employed: £
-                {(result.incomeTax + result.senationalInsurance).toFixed(2)}
+                {formatValue(result.incomeTax + result.senationalInsurance)}
               </p>
-              <p>Pensioner: £{result.incomeTax.toFixed(2)}</p>
-            </div>
-
-            {/* Net Income Box */}
-            <div className="bg-white p-4 border border-gray-300 rounded-lg shadow">
-              <p className="font-bold text-slate-700">Net Income per month</p>
-              <p>
-                Employed: £
-                {(
-                  (result.income -
-                    result.incomeTax -
-                    result.nationalInsurance) /
-                  12
-                ).toFixed(2)}
-              </p>
-              <p>
-                Self-Employed: £
-                {(
-                  (result.income -
-                    result.incomeTax -
-                    result.senationalInsurance) /
-                  12
-                ).toFixed(2)}
-              </p>
-              <p>
-                Pensioner: £
-                {((result.income - result.incomeTax) / 12).toFixed(2)}
-              </p>
+              <p>Pensioner: £{formatValue(result.incomeTax)}</p>
             </div>
 
             {/* Effective Tax Rate Box */}
