@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
+//import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 export default function TaxParameters() {
   const [params, setParams] = useState([]); // Existing tax parameters
@@ -205,19 +205,19 @@ export default function TaxParameters() {
       </div>*/}
 
       {/* Wrapper for Title Section */}
-      <div className="flex flex-col items-center space-y-2 mt-3">
+      {/*<div className="flex flex-col items-center space-y-2 mt-3">
         {/* Title Section */}
-        <h1 className="text-white text-lg font-bold text-center">
+      {/*<h1 className="text-white text-lg font-bold text-center">
           Manage Tax & NI Parameters
-        </h1>
+        </h1>*/}
 
-        {/* Info Icon with Tooltip */}
-        <div className="relative group inline-block">
+      {/* Info Icon with Tooltip */}
+      {/*<div className="relative group inline-block">
           {/* Heroicons Info Symbol */}
-          <InformationCircleIcon className="h-6 w-6 text-blue-500 cursor-pointer" />
+      {/*<InformationCircleIcon className="h-6 w-6 text-blue-500 cursor-pointer" />*/}
 
-          {/* Tooltip */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-64 bg-gray-700 text-white text-sm rounded-md px-4 py-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+      {/* Tooltip */}
+      {/*<div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-64 bg-gray-700 text-white text-sm rounded-md px-4 py-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
             Go to Official GOV.UK:
             <a
               href="https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025"
@@ -240,7 +240,7 @@ export default function TaxParameters() {
             </a>
           </div>
         </div>
-      </div>
+      </div>*/}
       {/*<div className="flex justify-center mt-5">
         <Link
           href="\calculator"
@@ -251,7 +251,7 @@ export default function TaxParameters() {
         </Link>
       </div>*/}
       {/* Form Section */}
-      <div className="bg-gray-100 p-4 mb-8 mt-3 rounded">
+      <div className="bg-gray-100 p-4 mb-8 mt-2 rounded">
         <h2 className="font-bold mb-4">
           {newParam._id
             ? "Edit Tax & NI Parameters"

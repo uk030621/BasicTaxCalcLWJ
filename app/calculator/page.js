@@ -62,8 +62,8 @@ export default function Calculator() {
   return (
     <div className="pt-4 px-4 min-h-screen bg-black">
       {/* Header */}
-      <div className="mb-4">
-        <div className="flex justify-center mt-5"></div>
+      <div className="">
+        <div className="flex justify-center"></div>
       </div>
 
       {/* Calculator Section */}
