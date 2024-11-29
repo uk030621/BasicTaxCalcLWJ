@@ -124,7 +124,7 @@ export default function Calculator() {
             Show Monthly Data
           </label>*/}
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full">
             <button
               className={`px-4 py-2 rounded-md w-full md:w-auto ${
                 year && income && !isNaN(income)
