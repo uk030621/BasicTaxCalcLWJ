@@ -53,6 +53,7 @@ export default function Calculator() {
     setIncome("");
     setResult(null);
     setError(""); // Clear errors
+    setIsMonthly("");
   };
 
   const formatValue = (value) => {
